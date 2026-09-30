@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Chandru P — Data Engineer | Data Platforms | Cloud | AI-Powered Data Engineering</title>
+<meta name="description" content="Chandru P is a Data Engineer specializing in cloud data pipelines, data platforms, distributed processing and analytics. Azure, Databricks, Snowflake, Python, PySpark, SQL, MongoDB, Power BI." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080B12;
+    --bg-2: #0F141D;
+    --card: #151B26;
+    --text: #F5F7FA;
+    --text-2: #9AA4B2;
+    --accent: #38D9A9;
+    --accent-hi: #63F2C7;
+    --border: #242C38;
+    --code: #A8FFEA;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+  html { scroll-padding-top: calc(72px + env(safe-area-inset-top, 0px)); }
+  a { color: inherit; text-decoration: none; }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  /* NAV */
+  nav.top {
+    position: fixed; top: env(safe-area-inset-top, 0px); left: 0; right: 0;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 40px; z-index: 100;
+    background: rgba(8,11,18,0.7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid transparent; transition: border-color .3s;
+  }
+  nav.top.scrolled { border-bottom-color: var(--border); }
+  nav .brand { font-family: 'Manrope', sans-serif; font-weight: 700; letter-spacing: 0.05em; font-size: 15px; }
+  nav .brand .dot { color: var(--accent); }
+  nav .links { display: flex; gap: 28px; align-items: center; }
+  nav .links a { font-size: 13.5px; color: var(--text-2); transition: color .2s; }
+  nav .links a:hover { color: var(--text); }
+  nav .resume-btn {
+    padding: 8px 16px; border: 1px solid var(--border); border-radius: 6px;
+    font-size: 13px; color: var(--text); transition: all .2s;
+  }
+  nav .resume-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .menu-toggle { display: none; background: none; border: none; color: var(--text); cursor: pointer; font-size: 22px; }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+  section { padding: 100px 0; }
+
+  /* HERO */
+  .hero { padding-top: 160px; padding-bottom: 60px; }
+  .hero-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 60px; align-items: center; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--accent); letter-spacing: 0.15em; margin-bottom: 24px;
+  }
+  .eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
+  h1.hero-title {
+    font-family: 'Manrope', sans-serif; font-weight: 800;
+    font-size: clamp(34px, 4.8vw, 60px); line-height: 1.06; margin: 0 0 24px;
+    letter-spacing: -0.02em;
+  }
+  h1.hero-title .high { color: var(--accent); }
+  .hero-sub { color: var(--text-2); font-size: 16px; line-height: 1.65; max-width: 520px; margin-bottom: 28px; }
+  .tagline {
+    display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    color: var(--text); background: rgba(56,217,169,0.06); border: 1px solid rgba(56,217,169,0.2);
+    padding: 8px 14px; border-radius: 6px; margin-bottom: 30px;
+  }
+  .cta-row { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 40px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 13px 22px; border-radius: 8px; font-size: 14px; font-weight: 500;
+    transition: all .2s; cursor: pointer; border: none; font-family: inherit;
+  }
+  .btn-primary { background: var(--accent); color: #08170F; }
+  .btn-primary:hover { background: var(--accent-hi); transform: translateY(-1px); }
+  .btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--border); }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+  .tech-strip { display: flex; flex-wrap: wrap; gap: 20px 26px; }
+  .tech-strip span { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-2); }
+
+  /* Pipeline SVG */
+  .pipeline-wrap {
+    background: linear-gradient(180deg, var(--bg-2), var(--card));
+    border: 1px solid var(--border); border-radius: 16px;
+    padding: 30px; position: relative; overflow: hidden;
+  }
+  .pipeline-wrap::before {
+    content: 'LIVE PIPELINE'; position: absolute; top: 14px; right: 18px;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    color: var(--text-2); letter-spacing: 0.2em;
+  }
+  .pipeline-wrap::after {
+    content: ''; position: absolute; top: 20px; right: 105px;
+    width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+    animation: pulse 1.5s infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+  svg.pipeline { width: 100%; height: auto; display: block; }
+  .node { fill: var(--card); stroke: var(--border); stroke-width: 1.5; }
+  .node-label { fill: var(--text); font-family: 'JetBrains Mono', monospace; font-size: 10px; text-anchor: middle; }
+  .flow-line { stroke: var(--border); stroke-width: 1.5; fill: none; }
+  .particle { fill: var(--accent); filter: drop-shadow(0 0 4px var(--accent)); }
+
+  /* METRICS */
+  .metrics {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+    padding: 40px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    margin-top: 40px;
+  }
+  .metric .num {
+    font-family: 'Manrope', sans-serif; font-weight: 700;
+    font-size: 40px; color: var(--accent); letter-spacing: -0.02em;
+  }
+  .metric .lbl { font-size: 13px; color: var(--text-2); margin-top: 4px; }
+
+  /* SECTION HEADINGS */
+  .sec-label {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--accent); letter-spacing: 0.2em; margin-bottom: 16px;
+  }
+  h2.sec-title {
+    font-family: 'Manrope', sans-serif; font-weight: 700;
+    font-size: clamp(28px, 3.4vw, 42px); margin: 0 0 20px; letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+  .sec-intro { color: var(--text-2); font-size: 16px; line-height: 1.7; max-width: 680px; }
+
+  /* ABOUT */
+  .about-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; margin-top: 40px; }
+  .about-text p { color: var(--text-2); line-height: 1.75; font-size: 15px; margin: 0 0 18px; }
+  .about-text p strong { color: var(--text); }
+  .timeline { border-left: 1px solid var(--border); padding-left: 24px; }
+  .tl-item { position: relative; padding-bottom: 24px; }
+  .tl-item::before {
+    content: ''; position: absolute; left: -29px; top: 6px;
+    width: 9px; height: 9px; border-radius: 50%; background: var(--accent);
+    box-shadow: 0 0 0 4px rgba(56,217,169,0.15);
+  }
+  .tl-year { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent); }
+  .tl-desc { color: var(--text); font-size: 14px; margin-top: 4px; font-weight: 500; }
+  .tl-sub { color: var(--text-2); font-size: 13px; margin-top: 2px; }
+
+  /* WHAT I DO */
+  .do-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 40px; }
+  .do-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 26px; transition: all .25s;
+  }
+  .do-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .do-card .num-tag {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--accent); letter-spacing: 0.15em; margin-bottom: 12px;
+  }
+  .do-card h4 { font-family: 'Manrope', sans-serif; font-size: 18px; margin: 0 0 10px; }
+  .do-card p { color: var(--text-2); font-size: 14px; line-height: 1.6; margin: 0; }
+
+  /* APPROACH FLOW */
+  .approach-wrap {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 14px; padding: 40px; margin-top: 40px;
+  }
+  .approach-flow {
+    display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+  }
+  .flow-step {
+    padding: 10px 16px; border: 1px solid var(--border); border-radius: 6px;
+    background: var(--bg-2); color: var(--text-2); transition: all .25s;
+  }
+  .flow-step:hover { border-color: var(--accent); color: var(--accent); }
+  .flow-arrow { color: var(--accent); font-size: 14px; }
+
+  /* STACK */
+  .stack-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 40px; }
+  .stack-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 22px; transition: all .25s;
+  }
+  .stack-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .stack-card h4 {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--accent); margin: 0 0 12px; letter-spacing: 0.15em;
+  }
+  .stack-card ul { list-style: none; padding: 0; margin: 0; }
+  .stack-card li {
+    font-size: 13px; color: var(--text); padding: 5px 0;
+    border-bottom: 1px dashed var(--border);
+  }
+  .stack-card li:last-child { border: none; }
+
+  /* PROJECTS */
+  .proj-list { margin-top: 50px; display: flex; flex-direction: column; gap: 24px; }
+  .proj-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 14px; padding: 36px; transition: all .3s; position: relative;
+    overflow: hidden;
+    display: grid; grid-template-columns: 160px 1fr; gap: 40px;
+  }
+  .proj-card::after {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    transform: translateX(-100%); transition: transform .6s;
+  }
+  .proj-card:hover { border-color: var(--accent); }
+  .proj-card:hover::after { transform: translateX(0); }
+  .proj-side { border-right: 1px solid var(--border); padding-right: 30px; }
+  .proj-num {
+    font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 44px;
+    color: var(--accent); letter-spacing: -0.02em; line-height: 1;
+  }
+  .proj-cat {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    color: var(--text-2); letter-spacing: 0.15em; margin-top: 12px; line-height: 1.5;
+  }
+  .proj-body h3 { font-family: 'Manrope', sans-serif; font-size: 24px; margin: 0 0 8px; }
+  .proj-body .subline { color: var(--text-2); font-size: 14px; margin-bottom: 20px; }
+  .proj-body .block { margin-bottom: 14px; }
+  .proj-body .block .k { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--accent); letter-spacing: 0.2em; display: block; margin-bottom: 6px; }
+  .proj-body .block .v { font-size: 14.5px; color: var(--text); line-height: 1.6; }
+  .proj-stack { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--border); }
+  .chip {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    padding: 4px 10px; border-radius: 4px;
+    background: rgba(56,217,169,0.08); color: var(--accent);
+    border: 1px solid rgba(56,217,169,0.2);
+  }
+
+  /* AI SECTION */
+  .ai-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 40px; }
+  .ai-card {
+    background: linear-gradient(180deg, var(--card), var(--bg-2));
+    border: 1px solid var(--border); border-radius: 12px; padding: 28px;
+    transition: all .25s;
+  }
+  .ai-card:hover { border-color: var(--accent); }
+  .ai-card .icon {
+    width: 40px; height: 40px; border-radius: 8px;
+    background: rgba(56,217,169,0.1); display: flex; align-items: center; justify-content: center;
+    color: var(--accent); margin-bottom: 16px; font-size: 20px;
+  }
+  .ai-card h4 { font-family: 'Manrope', sans-serif; font-size: 17px; margin: 0 0 8px; }
+  .ai-card p { color: var(--text-2); font-size: 14px; line-height: 1.65; margin: 0; }
+
+  /* EXPERIENCE */
+  .exp-list { margin-top: 40px; }
+  .exp-item {
+    display: grid; grid-template-columns: 160px 1fr;
+    gap: 40px; padding: 32px 0; border-top: 1px solid var(--border);
+  }
+  .exp-item:last-child { border-bottom: 1px solid var(--border); }
+  .exp-year { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--accent); }
+  .exp-role { font-family: 'Manrope', sans-serif; font-size: 22px; margin: 0 0 4px; }
+  .exp-org { color: var(--text-2); font-size: 14px; margin-bottom: 14px; }
+  .exp-desc { color: var(--text-2); font-size: 14.5px; line-height: 1.7; margin: 0 0 16px; }
+  .exp-focus { display: flex; flex-wrap: wrap; gap: 6px; }
+
+  /* PHILOSOPHY */
+  .phil-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin-top: 40px; }
+  .phil-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 22px; text-align: center; transition: all .25s;
+  }
+  .phil-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .phil-card h5 {
+    font-family: 'Manrope', sans-serif; font-size: 15px; margin: 0 0 8px; color: var(--accent);
+  }
+  .phil-card p { color: var(--text-2); font-size: 13px; line-height: 1.5; margin: 0; }
+
+  /* EXPLORING */
+  .explore-wrap {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 14px; padding: 40px; margin-top: 40px; text-align: center;
+  }
+  .explore-flow {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; margin-bottom: 24px;
+  }
+  .explore-text { color: var(--text-2); font-size: 14.5px; line-height: 1.7; max-width: 700px; margin: 0 auto; }
+
+  /* CONTACT */
+  .contact { text-align: center; padding: 120px 0; }
+  .contact h2 { font-size: clamp(32px, 5vw, 52px); margin: 0 0 20px; }
+  .contact p { color: var(--text-2); font-size: 16px; margin-bottom: 36px; max-width: 560px; margin-left: auto; margin-right: auto; line-height: 1.6; }
+  .contact-links { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+  /* FOOTER */
+  footer {
+    padding: 30px 40px; border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-2);
+  }
+  footer a:hover { color: var(--accent); }
+
+  /* REVEAL */
+  .reveal { opacity: 0; transform: translateY(20px); transition: all .7s ease; }
+  .reveal.on { opacity: 1; transform: translateY(0); }
+
+  /* RESPONSIVE */
+  @media (max-width: 1000px) {
+    .stack-grid { grid-template-columns: repeat(2, 1fr); }
+    .do-grid { grid-template-columns: repeat(2, 1fr); }
+    .phil-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 900px) {
+    nav.top { padding: 14px 20px; }
+    nav .links { display: none; position: absolute; top: 100%; left: 0; right: 0;
+      flex-direction: column; background: var(--bg-2); border-bottom: 1px solid var(--border);
+      padding: 20px; gap: 18px; }
+    nav .links.open { display: flex; }
+    .menu-toggle { display: block; }
+    .container { padding: 0 20px; }
+    section { padding: 70px 0; }
+    .hero { padding-top: 120px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+    .metrics { grid-template-columns: repeat(2, 1fr); padding: 24px; gap: 20px; }
+    .metric .num { font-size: 32px; }
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .proj-card { grid-template-columns: 1fr; padding: 28px; gap: 24px; }
+    .proj-side { border-right: none; border-bottom: 1px solid var(--border); padding-right: 0; padding-bottom: 20px; }
+    .ai-grid { grid-template-columns: 1fr; }
+    .exp-item { grid-template-columns: 1fr; gap: 10px; padding: 24px 0; }
+    .phil-grid { grid-template-columns: 1fr; }
+    .approach-wrap, .explore-wrap { padding: 24px; }
+    footer { padding: 20px; text-align: center; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="top" id="nav">
+  <div class="brand">CHANDRU<span class="dot">.</span>P</div>
+  <div class="links" id="links">
+    <a href="#about">About</a>
+    <a href="#what-i-do">What I Do</a>
+    <a href="#projects">Work</a>
+    <a href="#ai">AI × Data</a>
+    <a href="#stack">Stack</a>
+    <a href="#experience">Experience</a>
+    <a href="#contact" class="resume-btn">Contact ↗</a>
+  </div>
+  <button class="menu-toggle" onclick="document.getElementById('links').classList.toggle('open')">☰</button>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">DATA ENGINEER · DATA PLATFORM · AI-POWERED DATA SYSTEMS</div>
+        <h1 class="hero-title">Building reliable data systems that turn <span class="high">raw data into intelligence.</span></h1>
+        <p class="hero-sub">I'm Chandru P, a Data Engineer focused on building scalable data pipelines, cloud data platforms, data transformation workflows and analytics solutions across Azure, Databricks, Snowflake, Python, PySpark, SQL, MongoDB and Power BI.</p>
+        <div class="tagline">Ingest · Transform · Model · Analyze · Automate</div>
+        <div class="cta-row">
+          <a href="#projects" class="btn btn-primary">Explore My Work →</a>
+          <a href="#contact" class="btn btn-ghost">Download Resume ↓</a>
+        </div>
+        <div class="tech-strip">
+          <span>Azure</span><span>Databricks</span><span>Snowflake</span><span>Python</span>
+          <span>PySpark</span><span>SQL</span><span>MongoDB</span><span>Power BI</span>
+        </div>
+      </div>
+
+      <div class="pipeline-wrap">
+        <svg class="pipeline" viewBox="0 0 400 460" xmlns="http://www.w3.org/2000/svg">
+          <g>
+            <rect class="node" x="20" y="20" width="90" height="36" rx="6"/>
+            <text class="node-label" x="65" y="43">API</text>
+            <rect class="node" x="155" y="20" width="90" height="36" rx="6"/>
+            <text class="node-label" x="200" y="43">MongoDB</text>
+            <rect class="node" x="290" y="20" width="90" height="36" rx="6"/>
+            <text class="node-label" x="335" y="43">Files</text>
+          </g>
+          <path class="flow-line" d="M65 56 L65 90 L200 90 L200 110"/>
+          <path class="flow-line" d="M200 56 L200 110"/>
+          <path class="flow-line" d="M335 56 L335 90 L200 90"/>
+          <rect class="node" x="140" y="110" width="120" height="36" rx="6" style="stroke:var(--accent);"/>
+          <text class="node-label" x="200" y="133" style="fill:var(--accent);">INGESTION</text>
+          <path class="flow-line" d="M200 146 L200 180"/>
+          <rect class="node" x="140" y="180" width="120" height="36" rx="6"/>
+          <text class="node-label" x="200" y="203">BRONZE</text>
+          <path class="flow-line" d="M200 216 L200 250"/>
+          <rect class="node" x="140" y="250" width="120" height="36" rx="6"/>
+          <text class="node-label" x="200" y="273">SILVER</text>
+          <path class="flow-line" d="M200 286 L200 320"/>
+          <rect class="node" x="140" y="320" width="120" height="36" rx="6" style="stroke:var(--accent);"/>
+          <text class="node-label" x="200" y="343" style="fill:var(--accent);">GOLD</text>
+          <path class="flow-line" d="M200 356 L200 390 L100 390 L100 410"/>
+          <path class="flow-line" d="M200 390 L300 390 L300 410"/>
+          <rect class="node" x="55" y="410" width="90" height="36" rx="6"/>
+          <text class="node-label" x="100" y="433">Snowflake</text>
+          <rect class="node" x="255" y="410" width="90" height="36" rx="6"/>
+          <text class="node-label" x="300" y="433">Power BI</text>
+          <circle class="particle" r="3">
+            <animateMotion dur="4s" repeatCount="indefinite" path="M65 56 L65 90 L200 90 L200 356 L200 390 L100 390 L100 410"/>
+          </circle>
+          <circle class="particle" r="3">
+            <animateMotion dur="4s" begin="1.3s" repeatCount="indefinite" path="M200 56 L200 356 L200 390 L300 390 L300 410"/>
+          </circle>
+          <circle class="particle" r="3">
+            <animateMotion dur="4s" begin="2.6s" repeatCount="indefinite" path="M335 56 L335 90 L200 90 L200 356 L200 390 L100 390 L100 410"/>
+          </circle>
+        </svg>
+      </div>
+    </div>
+
+    <div class="metrics reveal">
+      <div class="metric"><div class="num" data-target="5">0</div><div class="lbl">Major Projects</div></div>
+      <div class="metric"><div class="num" data-target="10">0</div><div class="lbl">Technologies</div></div>
+      <div class="metric"><div class="num" data-target="4">0</div><div class="lbl">Cloud Platforms</div></div>
+      <div class="metric"><div class="num" data-target="1">0</div><div class="lbl">Years Experience</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="reveal">
+      <div class="sec-label">// 01 · ABOUT</div>
+      <h2 class="sec-title">Engineering data with purpose.</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>I'm a Data Engineer with experience in designing and developing data pipelines, data processing workflows and analytics platforms.</p>
+        <p>My work focuses on taking data from different sources such as APIs, databases, web platforms and documents, transforming and standardizing it, and making it available for analytics and decision-making.</p>
+        <p>I have worked with technologies including Python, SQL, PySpark, Azure Data Factory, Azure Blob Storage, Databricks, MongoDB, Snowflake and Power BI. I'm particularly interested in modern data engineering, cloud data platforms, data quality, scalable processing and the integration of AI into data workflows.</p>
+        <p>My approach is simple: <strong>build data systems that are reliable, maintainable and useful for the business.</strong></p>
+      </div>
+      <div class="timeline reveal">
+        <div class="tl-item">
+          <div class="tl-year">2024</div>
+          <div class="tl-desc">Data Engineering Foundation</div>
+          <div class="tl-sub">Python · SQL · ETL fundamentals</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-year">2025</div>
+          <div class="tl-desc">Cloud &amp; Big Data</div>
+          <div class="tl-sub">Databricks · Azure · PySpark · MongoDB</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-year">2026</div>
+          <div class="tl-desc">Data Engineering Lead</div>
+          <div class="tl-sub">Snowflake · Platform Architecture · AI-powered Pipelines</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT I DO -->
+<section id="what-i-do" style="background: var(--bg-2);">
+  <div class="container">
+    <div class="reveal">
+      <div class="sec-label">// 02 · WHAT I DO</div>
+      <h2 class="sec-title">Data engineering, end to end.</h2>
+    </div>
+    <div class="do-grid">
+      <div class="do-card reveal">
+        <div class="num-tag">01</div>
+        <h4>Data Engineering</h4>
+        <p>Design and develop end-to-end data pipelines for collecting, processing, transforming and delivering structured data.</p>
+      </div>
+      <div class="do-card reveal">
+        <div class="num-tag">02</div>
+        <h4>Cloud Data Platforms</h4>
+        <p>Build cloud-based data workflows using Azure services, Databricks and modern data platform architectures.</p>
+      </div>
+      <div class="do-card reveal">
+        <div class="num-tag">03</div>
+        <h4>Data Transformation</h4>
+        <p>Clean, standardize, validate and transform large and complex datasets using Python, SQL and PySpark.</p>
+      </div>
+      <div class="do-card reveal">
+        <div class="num-tag">04</div>
+        <h4>Data Analytics</h4>
+        <p>Convert processed data into meaningful dashboards, KPIs and analytical insights using Power BI and data models.</p>
+      </div>
+      <div class="do-card reveal">
+        <div class="num-tag">05</div>
+        <h4>AI-Powered Engineering</h4>
+        <p>Explore AI and semantic matching techniques to automate data mapping, classification, entity matching and intelligent data transformation.</p>
+      </div>
+      <div class="do-card reveal" style="background: linear-gradient(135deg, rgba(56,217,169,0.08), transparent); border-color: rgba(56,217,169,0.3);">
+        <div class="num-tag">→</div>
+        <h4>My Approach</h4>
+        <p>From raw data to business intelligence — combining traditional ETL/ELT with distributed processing, cloud platforms and AI-assisted workflows.</p>
+      </div>
+    </div>
+
+    <div class="approach-wrap reveal">
+      <div class="approach-flow">
+        <div class="flow-step">Sources</div><span class="flow-arrow">→</span>
+        <div class="flow-step">Ingestion</div><span class="flow-arrow">→</span>
+        <div class="flow-step">Storage</div><span class="flow-arrow">→</span>
+        <div class="flow-step">Cleaning</div><span class="flow-arrow">→</span>
+        <div class="flow-step">Transformation</div><span class="flow-arrow">→</span>
+        <div class="flow-step">Modeling</div><span class="flow-arrow">→</span>
+        <div class="flow-step">Quality</div><span class="flow-arrow">→</span>
+        <div class="flow-step">Analytics / AI</div><span class="flow-arrow">→</span>
+        <div class="flow-step" style="border-color: var(--accent); color: var(--accent);">Insights</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="reveal">
+      <div class="sec-label">// 03 · FEATURED WORK</div>
+      <h2 class="sec-title">Selected data engineering projects.</h2>
+      <p class="sec-intro">Case studies from pipelines, platforms and intelligence systems I've built.</p>
+    </div>
+
+    <div class="proj-list">
+      <article class="proj-card reveal">
+        <div class="proj-side">
+          <div class="proj-num">01</div>
+          <div class="proj-cat">DATA ENGINEERING · WEB DATA · AI · ANALYTICS</div>
+        </div>
+        <div class="proj-body">
+          <h3>F2B Price Intelligence Platform</h3>
+          <div class="subline">Multi-platform product &amp; pricing data pipeline with AI-driven product matching.</div>
+          <div class="block">
+            <span class="k">PROBLEM</span>
+            <div class="v">Product information from different platforms uses inconsistent names, units, quantities and structures. Comparing them manually doesn't scale.</div>
+          </div>
+          <div class="block">
+            <span class="k">SOLUTION</span>
+            <div class="v">Built an automated pipeline combining web data collection, product normalization, AI-assisted semantic matching and database storage — collecting data from Zepto, Blinkit, BigBasket and Farm2Bag, then mapping products into a standardized F2B structure for analytics.</div>
+          </div>
+          <div class="block">
+            <span class="k">KEY WORK</span>
+            <div class="v">Multi-platform collection · product name standardization · semantic matching · quantity normalization · duplicate handling · historical price tracking · analytics dashboards.</div>
+          </div>
+          <div class="proj-stack">
+            <span class="chip">Python</span><span class="chip">Playwright</span><span class="chip">MongoDB</span>
+            <span class="chip">Semantic Matching</span><span class="chip">Databricks</span><span class="chip">Power BI</span>
+            <span class="chip">React</span><span class="chip">FastAPI</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="proj-card reveal">
+        <div class="proj-side">
+          <div class="proj-num">02</div>
+          <div class="proj-cat">DATA PLATFORM · MEDALLION ARCHITECTURE</div>
+        </div>
+        <div class="proj-body">
+          <h3>DATUM — Modern Data Management Platform</h3>
+          <div class="subline">A medallion-architecture data platform separating raw, processed and business-ready layers.</div>
+          <div class="block">
+            <span class="k">OVERVIEW</span>
+            <div class="v">DATUM organizes data into structured Bronze, Silver and Gold layers to improve data quality, maintainability and downstream analytics.</div>
+          </div>
+          <div class="block">
+            <span class="k">LAYERS</span>
+            <div class="v"><strong>Bronze</strong> — raw data with minimal transformation, preserving source. <strong>Silver</strong> — cleaning, deduplication, standardization, schema normalization, business rules. <strong>Gold</strong> — curated datasets for analytics, reporting and application consumption.</div>
+          </div>
+          <div class="block">
+            <span class="k">KEY WORK</span>
+            <div class="v">Data ingestion · schema standardization · duplicate removal · quality rules · business-ready modeling · analytics integration.</div>
+          </div>
+          <div class="proj-stack">
+            <span class="chip">MongoDB</span><span class="chip">Databricks</span><span class="chip">PySpark</span>
+            <span class="chip">Python</span><span class="chip">SQL</span><span class="chip">Power BI</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="proj-card reveal">
+        <div class="proj-side">
+          <div class="proj-num">03</div>
+          <div class="proj-cat">OCR · DOCUMENT PROCESSING · ANALYTICS</div>
+        </div>
+        <div class="proj-body">
+          <h3>Tamil Nadu Voter Data Processing Platform</h3>
+          <div class="subline">Large-scale document extraction and structured dataset generation.</div>
+          <div class="block">
+            <span class="k">OVERVIEW</span>
+            <div class="v">A large-scale workflow that extracts, cleans and structures voter information from Tamil Nadu electoral documents and smart-card sources, converting unstructured document data into analysis-ready datasets.</div>
+          </div>
+          <div class="block">
+            <span class="k">PIPELINE</span>
+            <div class="v">Scanned Documents → OCR / Extraction → Raw Storage → Cleaning → Standardization → Booth Processing → Validation → Structured Dataset → Analytics.</div>
+          </div>
+          <div class="block">
+            <span class="k">KEY WORK</span>
+            <div class="v">OCR-based document extraction · Tamil &amp; English processing · duplicate handling · booth number standardization · polling station data processing · validation.</div>
+          </div>
+          <div class="proj-stack">
+            <span class="chip">Python</span><span class="chip">OCR</span><span class="chip">Azure Document Intelligence</span>
+            <span class="chip">MongoDB</span><span class="chip">Databricks</span><span class="chip">PySpark</span><span class="chip">Power BI</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="proj-card reveal">
+        <div class="proj-side">
+          <div class="proj-num">04</div>
+          <div class="proj-cat">DATA ANALYTICS · POWER BI</div>
+        </div>
+        <div class="proj-body">
+          <h3>Election Data Analytics &amp; Booth Intelligence</h3>
+          <div class="subline">Consolidating historical election data into structured analytical models.</div>
+          <div class="block">
+            <span class="k">OVERVIEW</span>
+            <div class="v">An analytical platform that transforms constituency, booth and party-level historical election data into structured datasets and interactive Power BI dashboards.</div>
+          </div>
+          <div class="block">
+            <span class="k">ANALYSIS AREAS</span>
+            <div class="v">Constituency-level · booth-level · zone-level · party-wise · historical comparison · postal vote analysis · booth strength classification · year-over-year comparison.</div>
+          </div>
+          <div class="block">
+            <span class="k">OUTCOME</span>
+            <div class="v">Historical election datasets are turned into structured analytical models explorable through interactive Power BI reports.</div>
+          </div>
+          <div class="proj-stack">
+            <span class="chip">Python</span><span class="chip">SQL</span><span class="chip">Databricks</span>
+            <span class="chip">PySpark</span><span class="chip">MongoDB</span><span class="chip">Power BI</span><span class="chip">DAX</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="proj-card reveal">
+        <div class="proj-side">
+          <div class="proj-num">05</div>
+          <div class="proj-cat">AZURE · ADF · DATABRICKS · DATA LAKE</div>
+        </div>
+        <div class="proj-body">
+          <h3>Azure Data Engineering Pipeline</h3>
+          <div class="subline">End-to-end cloud data pipeline with orchestration, distributed processing and BI.</div>
+          <div class="block">
+            <span class="k">OVERVIEW</span>
+            <div class="v">A cloud pipeline that collects data from external sources, stores it in Azure Blob Storage, processes it in Databricks and prepares curated datasets for analytics.</div>
+          </div>
+          <div class="block">
+            <span class="k">ARCHITECTURE</span>
+            <div class="v">External Source / API → Azure Data Factory → Blob Storage → Databricks → PySpark Transformation → Bronze → Silver → Gold → Power BI.</div>
+          </div>
+          <div class="block">
+            <span class="k">KEY WORK</span>
+            <div class="v">Pipeline orchestration · API-based ingestion · cloud storage · distributed processing · data quality · partitioning · modeling · Power BI integration.</div>
+          </div>
+          <div class="proj-stack">
+            <span class="chip">Azure Data Factory</span><span class="chip">Azure Blob Storage</span>
+            <span class="chip">Databricks</span><span class="chip">PySpark</span><span class="chip">Python</span><span class="chip">Power BI</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- AI SECTION -->
+<section id="ai" style="background: var(--bg-2);">
+  <div class="container">
+    <div class="reveal">
+      <div class="sec-label">// 04 · DATA × AI</div>
+      <h2 class="sec-title">Data engineering in the AI era.</h2>
+      <p class="sec-intro">Modern data engineering is no longer limited to traditional ETL. AI can automate parts of integration, classification, matching and transformation — while traditional engineering practices provide the reliability and governance required for production. I explore the combination of both to build intelligent pipelines capable of understanding unstructured and inconsistent data.</p>
+    </div>
+    <div class="ai-grid">
+      <div class="ai-card reveal">
+        <div class="icon">⚡</div>
+        <h4>Semantic Product Matching</h4>
+        <p>Identifying equivalent products across different platforms despite differences in naming and descriptions.</p>
+      </div>
+      <div class="ai-card reveal">
+        <div class="icon">◆</div>
+        <h4>AI-Assisted Data Mapping</h4>
+        <p>Mapping heterogeneous source fields and entities into standardized business structures.</p>
+      </div>
+      <div class="ai-card reveal">
+        <div class="icon">▲</div>
+        <h4>Intelligent Transformation</h4>
+        <p>Using AI-assisted techniques to automate parts of data cleaning, classification and normalization.</p>
+      </div>
+      <div class="ai-card reveal">
+        <div class="icon">◉</div>
+        <h4>Agentic Data Workflows</h4>
+        <p>Exploring automated workflows where data collection, validation and transformation can be coordinated intelligently.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STACK -->
+<section id="stack">
+  <div class="container">
+    <div class="reveal">
+      <div class="sec-label">// 05 · STACK</div>
+      <h2 class="sec-title">My engineering stack.</h2>
+      <p class="sec-intro">Tools and platforms I use to build data systems end-to-end — from ingestion to intelligence.</p>
+    </div>
+    <div class="stack-grid">
+      <div class="stack-card reveal"><h4>PROGRAMMING</h4><ul><li>Python</li><li>SQL</li><li>Java</li><li>JavaScript</li></ul></div>
+      <div class="stack-card reveal"><h4>DATA ENGINEERING</h4><ul><li>PySpark</li><li>Pandas</li><li>NumPy</li><li>ETL / ELT</li></ul></div>
+      <div class="stack-card reveal"><h4>CLOUD</h4><ul><li>Microsoft Azure</li><li>Azure Data Factory</li><li>Azure Blob Storage</li></ul></div>
+      <div class="stack-card reveal"><h4>DATA PLATFORMS</h4><ul><li>Databricks</li><li>Snowflake</li></ul></div>
+      <div class="stack-card reveal"><h4>DATABASES</h4><ul><li>MongoDB</li><li>MySQL</li><li>Azure SQL</li></ul></div>
+      <div class="stack-card reveal"><h4>ANALYTICS</h4><ul><li>Power BI</li><li>DAX</li><li>Data Modeling</li></ul></div>
+      <div class="stack-card reveal"><h4>DEVELOPMENT</h4><ul><li>React</li><li>Node.js</li><li>FastAPI</li><li>Git &amp; GitHub</li></ul></div>
+      <div class="stack-card reveal"><h4>AI / INTELLIGENT</h4><ul><li>Semantic Matching</li><li>LLM Integration</li><li>AI Data Mapping</li><li>Embedding-based Matching</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" style="background: var(--bg-2);">
+  <div class="container">
+    <div class="reveal">
+      <div class="sec-label">// 06 · EXPERIENCE</div>
+      <h2 class="sec-title">Professional journey.</h2>
+    </div>
+    <div class="exp-list">
+      <div class="exp-item reveal">
+        <div class="exp-year">2026 — Now</div>
+        <div>
+          <h3 class="exp-role">Data Management / Data Engineering Lead</h3>
+          <div class="exp-org">Shinelogics</div>
+          <p class="exp-desc">Working across data engineering, data platform development and data management initiatives, with a focus on building scalable data workflows and modernizing data architecture.</p>
+          <div class="exp-focus">
+            <span class="chip">Data Engineering</span><span class="chip">Platform Architecture</span>
+            <span class="chip">Pipeline Development</span><span class="chip">Data Management</span>
+            <span class="chip">Databricks</span><span class="chip">Snowflake</span>
+            <span class="chip">MongoDB</span><span class="chip">Power BI</span>
+            <span class="chip">AI-powered Workflows</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 60px;" class="reveal">
+      <div class="sec-label">// CURRENTLY EXPLORING</div>
+      <h2 class="sec-title" style="font-size: clamp(22px, 2.6vw, 32px);">Always learning, always shipping.</h2>
+    </div>
+    <div class="explore-wrap reveal">
+      <div class="explore-flow">
+        <div class="flow-step">Snowflake Data Engineering</div><span class="flow-arrow">→</span>
+        <div class="flow-step">Modern Data Architecture</div><span class="flow-arrow">→</span>
+        <div class="flow-step">AI-powered Pipelines</div><span class="flow-arrow">→</span>
+        <div class="flow-step">Platform Engineering</div><span class="flow-arrow">→</span>
+        <div class="flow-step" style="border-color: var(--accent); color: var(--accent);">Data Quality &amp; Governance</div>
+      </div>
+      <p class="explore-text">I continuously explore new approaches to data engineering, with a particular focus on modern cloud data platforms, Snowflake, AI-assisted data workflows, data architecture and scalable processing.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section id="philosophy">
+  <div class="container">
+    <div class="reveal">
+      <div class="sec-label">// 07 · PHILOSOPHY</div>
+      <h2 class="sec-title">How I think about data.</h2>
+      <p class="sec-intro"><strong style="color: var(--text);">Good data engineering is more than moving data from A to B.</strong> A production-ready data system should be reliable, scalable, observable, maintainable and understandable. I design pipelines where data quality and architecture are considered from the beginning — not added after the pipeline is built.</p>
+    </div>
+    <div class="phil-grid">
+      <div class="phil-card reveal"><h5>Reliable</h5><p>Build pipelines that can be trusted.</p></div>
+      <div class="phil-card reveal"><h5>Scalable</h5><p>Design systems that grow with data volume.</p></div>
+      <div class="phil-card reveal"><h5>Maintainable</h5><p>Keep transformations clear and reusable.</p></div>
+      <div class="phil-card reveal"><h5>Observable</h5><p>Make failures and quality issues visible.</p></div>
+      <div class="phil-card reveal"><h5>Business-Driven</h5><p>Build around real business requirements.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact" style="background: var(--bg-2);">
+  <div class="container reveal">
+    <div class="sec-label" style="display: inline-block;">// LET'S CONNECT</div>
+    <h2 class="sec-title">Let's build something with data.</h2>
+    <p>Have a data problem, a pipeline to build, or an idea that needs a scalable data platform? Let's connect.</p>
+    <div class="contact-links">
+      <a href="https://www.linkedin.com/" target="_blank" rel="noopener" class="btn btn-primary">LinkedIn →</a>
+      <a href="https://github.com/" target="_blank" rel="noopener" class="btn btn-ghost">GitHub →</a>
+      <a href="mailto:chandru@example.com" class="btn btn-ghost">Email →</a>
+      <a href="#" class="btn btn-ghost">Resume ↓</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>© 2026 Chandru P — Data Engineer · Data Platforms · AI-Powered Data</div>
+  <div>Raw Data → Reliable Systems → Business Intelligence</div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 20) nav.classList.add('scrolled'); else nav.classList.remove('scrolled');
+  });
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('on');
+        if (e.target.classList.contains('metrics')) {
+          e.target.querySelectorAll('.num').forEach(n => {
+            const target = parseInt(n.dataset.target, 10);
+            let cur = 0;
+            const step = Math.max(1, Math.ceil(target / 30));
+            const t = setInterval(() => {
+              cur += step;
+              if (cur >= target) { cur = target; clearInterval(t); }
+              n.textContent = cur + '+';
+            }, 40);
+          });
+        }
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  document.querySelectorAll('#links a').forEach(a => {
+    a.addEventListener('click', () => document.getElementById('links').classList.remove('open'));
+  });
+</script>
+
+</body>
+</html>
